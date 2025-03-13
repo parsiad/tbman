@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TensorBoard Manager</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+</head>
+<body>
+    <div class="container mt-5">
+        <div class="text-center mb-4">
+            <img alt="TensorBoard Manager" src="{{ url_for('static', filename='logo.webp') }}" style="border-radius: 15px; max-height: 200px">
+        </div>
+
+        <h2>Spawn Instance:</h2>
+        <form method="POST" class="mb-4">
+            <div class="form-group">
+                <label for="paths">Log Directories (one per line):</label>
+                <textarea class="form-control" id="paths" name="paths" rows="5"></textarea>
+            </div>
+            <div class="form-group">
+                <label for="title">Window Title:</label>
+                <input type="text" class="form-control" id="title" name="title" value="TensorBoard">
+            </div>
+            <button type="submit" class="btn btn-primary">Launch</button>
+        </form>
+
+        <h2>Running Instances:</h2>
+        <ul class="list-group">
+            {% for cfg, ident, logdir, port in instances %}
+            <li class="list-group-item d-flex justify-content-between align-items-center">
+                <span>
+            Instance: <a href="http://{{ host }}:{{ port }}" target="_blank">http://{{ host }}:{{ port }}</a>
+                    <br>
+                    <small class="text-muted">Paths: {{ cfg.paths }}</small>
+                    <br>
+                    <small class="text-muted">Window Title: {{ cfg.title }}</small>
+                </span>
+                <a href="{{ url_for('stop', instance_id=ident) }}" class="btn btn-danger btn-sm">Stop</a>
+            </li>
+            {% endfor %}
+        </ul>
+        <div class="mt-3">
+            <a href="{{ url_for('cleanup') }}" class="btn btn-danger">Stop All</a>
+        </div>
+    </div>
+
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.3/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</body>
+</html>
