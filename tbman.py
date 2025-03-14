@@ -73,10 +73,6 @@ class _Manager:
         self._tb_path = tb_path
         self._load()
 
-    def __del__(self) -> None:
-        self.save()
-        self.stop_all()
-
     def _load(self):
         if not os.path.exists(self._db_path):
             return
@@ -184,7 +180,8 @@ def stop(instance_id: int):
 def _handle_sigint(sig, frame):
     del sig, frame
     global manager
-    del manager
+    manager.save()
+    manager.stop_all()
     sys.exit(0)
 
 
