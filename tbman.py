@@ -157,6 +157,7 @@ def index():
         else:
             paths = [d for d in paths_str.splitlines()]
             manager.launch(cfg=_Config(paths=paths, title=title))
+            manager.save()
             return redirect(url_for("index"))
 
     instances = manager.get_instances()
