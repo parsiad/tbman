@@ -164,13 +164,6 @@ def index():
     return render_template("index.html", host=manager.host, instances=instances)
 
 
-@app.route("/save")
-def save():
-    global manager
-    manager.save()
-    return redirect(url_for("index"))
-
-
 @app.route("/stop/<int:instance_id>")
 def stop(instance_id: int):
     global manager
