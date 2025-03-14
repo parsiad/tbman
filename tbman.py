@@ -181,7 +181,7 @@ def _handle_sigint(sig, frame):
 
 if __name__ == "__main__":
     parser = argparse.ArgumentParser(description="TensorBoard Manager")
-    default_db_path = f"/home/{getpass.getuser()}/.tbman.json"
+    default_db_path = str(Path.home() / ".tbman.json")
     parser.add_argument(
         "-p",
         "--port",
